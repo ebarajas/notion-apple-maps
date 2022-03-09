@@ -1,0 +1,16 @@
+name = "notion-maps"
+type = "javascript"
+zone_id = ""
+account_id = ""
+route = ""
+workers_dev = true
+compatibility_date = "2022-03-09"
+
+[build]
+command = "npm install && npm run build"
+[build.upload]
+format = "service-worker"
+
+# [secrets]
+# MAPKIT_PRIVATE_KEY_BASE64
+# NOTION_API_KEY
