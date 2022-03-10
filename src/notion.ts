@@ -3,13 +3,13 @@ import { Client } from '@notionhq/client'
 // Look under this column for locations
 const LOCATION_COLUMN = 'Location'
 
-const notion = new Client({
-  auth: NOTION_API_KEY,
-})
-
 export async function getLocationsFromDatabase(
   database_id: string,
 ): Promise<string[]> {
+  const notion = new Client({
+    auth: NOTION_API_KEY,
+  })
+
   const { results } = await notion.databases.query({
     database_id,
     filter: {

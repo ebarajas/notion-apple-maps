@@ -38,14 +38,19 @@ body {
 mapkit.init({
   authorizationCallback: function(done) {
     fetch("/mapkit/jwt")
-      .then(res => res.text())
+      .then(res => {
+        if (!res.ok) {
+          throw Error(res.statusText);
+        }
+        return res.text()
+      })
       .then(done);
     },
-    language: "en-US"
+    language: "en"
 });
 var map = new mapkit.Map('map');
 var geocoder = new mapkit.Geocoder({language: "en-US", getsUserLocation: false})
-fetch("/${databaseId}/places")
+fetch("/places/${databaseId}")
   .then(res => res.json())
   .then(places => Promise.all(
     places.map(place => new Promise((resolve, reject) => {
@@ -68,24 +73,22 @@ fetch("/${databaseId}/places")
       animate: true,
       padding: new mapkit.Padding(60, 25, 60, 25)
     })
-
   })
+  .catch(console.log)
 </script>
 </body>
 </html>
 `
 }
 
-const BadRequestResponse = () => {
-  new Response('Bad Request', { status: 400 })
-}
+const BadRequestResponse = () => new Response('Bad Request', { status: 400 })
 
 router.get('/mapkit/jwt', async () => {
   const token = await createJWTToken()
   return new Response(token)
 })
 
-router.get('/:databaseId/places', async ({ params }) => {
+router.get('/places/:databaseId', async ({ params }) => {
   if (!params) {
     return BadRequestResponse()
   }
@@ -101,7 +104,7 @@ router.get('/:databaseId/places', async ({ params }) => {
   }
 })
 
-router.get('/:databaseId/map', ({ params }) => {
+router.get('/map/:databaseId', ({ params }) => {
   if (!params) {
     return BadRequestResponse()
   }
@@ -119,6 +122,11 @@ router.get('/', () => {
 
 router.all('*', () => new Response('Not Found.', { status: 404 }))
 
+const errorHandler = (err: unknown) => {
+  console.log('Uncaught Error: ', String(err))
+  return new Response('Internal Server Error', { status: 500 })
+}
+
 addEventListener('fetch', (event: FetchEvent) => {
-  event.respondWith(router.handle(event.request))
+  event.respondWith(router.handle(event.request).catch(errorHandler))
 })

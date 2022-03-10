@@ -8,5 +8,6 @@ export function createJWTToken(): Promise<string> {
       exp: Math.floor(Date.now() / 1000) + 10 * 60, // Expires: Now + 10m
     },
     MAPKIT_PRIVATE_KEY,
+    { algorithm: 'ES256' },
   )
 }

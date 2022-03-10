@@ -12,5 +12,7 @@ command = "npm install && npm run build"
 format = "service-worker"
 
 # [secrets]
-# MAPKIT_PRIVATE_KEY_BASE64
+# MAPKIT_TEAM_ID
+# MAPKIT_PRIVATE_KEY_ID
+# MAPKIT_PRIVATE_KEY
 # NOTION_API_KEY
