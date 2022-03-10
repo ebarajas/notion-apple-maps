@@ -80,8 +80,9 @@ const BadRequestResponse = () => {
   new Response('Bad Request', { status: 400 })
 }
 
-router.get('/mapkit/jwt', () => {
-  return new Response(createJWTToken())
+router.get('/mapkit/jwt', async () => {
+  const token = await createJWTToken()
+  return new Response(token)
 })
 
 router.get('/:databaseId/places', async ({ params }) => {
