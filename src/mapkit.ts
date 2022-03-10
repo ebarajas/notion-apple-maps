@@ -1,7 +1,5 @@
 import jwt from '@tsndr/cloudflare-worker-jwt'
 
-const decodedPrivateKey = Buffer.from(MAPKIT_PRIVATE_KEY_BASE64).toString()
-
 export function createJWTToken(): Promise<string> {
   return jwt.sign(
     {
@@ -9,6 +7,6 @@ export function createJWTToken(): Promise<string> {
       iat: Math.floor(Date.now() / 1000),
       exp: Math.floor(Date.now() / 1000) + 10 * 60, // Expires: Now + 10m
     },
-    decodedPrivateKey,
+    MAPKIT_PRIVATE_KEY,
   )
 }

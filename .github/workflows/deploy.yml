@@ -16,11 +16,11 @@ jobs:
          secrets: |
            MAPKIT_TEAM_ID
            MAPKIT_PRIVATE_KEY_ID
-           MAPKIT_PRIVATE_KEY_BASE64
+           MAPKIT_PRIVATE_KEY
            NOTION_API_KEY
         env:
           CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
           MAPKIT_TEAM_ID: ${{ secrets.MAPKIT_TEAM_ID }}
           MAPKIT_PRIVATE_KEY_ID: ${{ secrets.MAPKIT_PRIVATE_KEY_ID }}
-          MAPKIT_PRIVATE_KEY_BASE64: ${{ secrets.MAPKIT_PRIVATE_KEY_BASE64 }}
+          MAPKIT_PRIVATE_KEY_BASE64: ${{ secrets.MAPKIT_PRIVATE_KEY }}
           NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
